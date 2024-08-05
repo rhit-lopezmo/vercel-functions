@@ -10,13 +10,19 @@ app.post('/webhook', async (req, res) => {
     // Extract data from the request
     const data = req.body;
 
-    const playerFirstName = "";
-    const playerLastName = "";
-    const email = "";
-    const teamTryingOutFor = "";
+    if (data.line_items.price.lookup_key !== "tryout_payment_2024") {
+        console.log("Checkout Session did not match criteria.");
+
+        res.status(200).json({ success: true, filtered: true });
+    }
+
+    const playerFirstName = data.custom_fields[0].text.value.trim();
+    const playerLastName = data.custom_fields[1].text.value.trim();
+    const email = data.customer_details.email;
+    const teamTryingOutFor = data.custom_field[2].dropdown.value.trim().toUpperCase();
     
     // date formatting
-    const date = new Date();
+    let date = new Date();
     const mm = date.getMonth() + 1;
     const dd = date.getDate();
     const yyyy = date.getFullYear();
@@ -31,41 +37,48 @@ app.post('/webhook', async (req, res) => {
         mm = '0' + mm;
     } 
 
-    today = mm + '-' + dd + '-' + yyyy;
+    date = mm + '-' + dd + '-' + yyyy;
 
-    // Authenticate with Google Sheets API
-    const auth = new google.auth.GoogleAuth({
-      credentials: {
-        client_email: process.env.GOOGLE_CLIENT_EMAIL,
-        private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
-      },
-      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-    });
+    console.log("--- Found Data ---");
+    console.log(`First Name: ${playerFirstName}`);
+    console.log(`Last Name: ${playerLastName}`);
+    console.log(`Email: ${email}`);
+    console.log(`Team Trying Out For: ${teamTryingOutFor}`);
+    console.log(`Date: ${date}`);
 
-    const sheets = google.sheets({ version: 'v4', auth });
+    // // Authenticate with Google Sheets API
+    // const auth = new google.auth.GoogleAuth({
+    //   credentials: {
+    //     client_email: process.env.GOOGLE_CLIENT_EMAIL,
+    //     private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+    //   },
+    //   scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+    // });
 
-    // ID of the Google Sheet and the range where data will be written
-    const spreadsheetId = process.env.SPREADSHEET_ID;
-    const range = 'Sheet1!A1:E1';
+    // const sheets = google.sheets({ version: 'v4', auth });
 
-    // Prepare the data to write
-    const values = [[
-      date,
-      playerFirstName,
-      playerLastName,
-      email,
-      teamTryingOutFor,
-    ]];
+    // // ID of the Google Sheet and the range where data will be written
+    // const spreadsheetId = process.env.SPREADSHEET_ID;
+    // const range = 'Sheet1!A1:E1';
 
-    // Write data to the Google Sheet
-    await sheets.spreadsheets.values.append({
-      spreadsheetId,
-      range,
-      valueInputOption: 'RAW',
-      resource: { values },
-    });
+    // // Prepare the data to write
+    // const values = [[
+    //   date,
+    //   playerFirstName,
+    //   playerLastName,
+    //   email,
+    //   teamTryingOutFor,
+    // ]];
 
-    res.status(200).json({ success: true });
+    // // Write data to the Google Sheet
+    // await sheets.spreadsheets.values.append({
+    //   spreadsheetId,
+    //   range,
+    //   valueInputOption: 'RAW',
+    //   resource: { values },
+    // });
+
+    res.status(200).json({ success: true, filtered: false });
   } catch (error) {
     console.error('Error handling webhook:', error);
     res.status(500).json({ error: 'Internal Server Error' });
