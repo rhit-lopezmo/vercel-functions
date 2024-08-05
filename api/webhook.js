@@ -5,7 +5,7 @@ const app = express();
 
 app.use(express.json());
 
-app.post('api/webhook', async (req, res) => {
+app.post('/webhook', async (req, res) => {
   try {
     // Extract data from the request
     const data = req.body;
