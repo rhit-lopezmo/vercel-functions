@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.19.2",
     "vercel": "^35.2.3"
   }
 }
