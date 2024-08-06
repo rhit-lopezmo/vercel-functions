@@ -5,9 +5,6 @@ export default async function handler(req, res) {
 	if (req.method === "POST") {
 		try {
       const event = req.body;
-      
-      // Log the received event
-      console.log('Received event:', JSON.stringify(event, null, 2));
 
       const sessionId = event.data.object.id;
 
