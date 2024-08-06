@@ -2,7 +2,6 @@
   "name": "vercel-functions",
   "version": "1.0.0",
   "description": "vercel functions for tryouts",
-  "main": "api/webhook.js",
   "scripts": {
     "start": "node api/webhook.js",
     "test": "echo \"Error: no test specified\" && exit 1"
