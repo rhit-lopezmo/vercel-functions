@@ -35,38 +35,38 @@ export default async function handler(req, res) {
       console.log(`Team Trying Out For: ${teamTryingOutFor}`);
       console.log(`Date: ${date}`);
 
-      // // Authenticate with Google Sheets API
-      // const auth = new google.auth.GoogleAuth({
-      //   credentials: {
-      //     client_email: process.env.GOOGLE_CLIENT_EMAIL,
-      //     private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
-      //   },
-      //   scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-      // });
+      // Authenticate with Google Sheets API
+      const auth = new google.auth.GoogleAuth({
+        credentials: {
+          client_email: process.env.GOOGLE_CLIENT_EMAIL,
+          private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+        },
+        scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+      });
 
-      // const sheets = google.sheets({ version: 'v4', auth });
+      const sheets = google.sheets({ version: 'v4', auth });
 
-      // // ID of the Google Sheet and the range where data will be written
-      // const spreadsheetId = process.env.SPREADSHEET_ID;
-      // const range = 'Sheet1!A1:E1';
+      // ID of the Google Sheet and the range where data will be written
+      const spreadsheetId = process.env.SPREADSHEET_ID;
+      const range = 'Sheet1!A1:E1';
 
-      // // Prepare the data to write
-      // const values = [[
-      //   date,
-      //   playerFirstName,
-      //   playerLastName,
-      //   email,
-      //   teamTryingOutFor,
-      // ]];
+      // Prepare the data to write
+      const values = [[
+        date,
+        playerFirstName,
+        playerLastName,
+        email,
+        teamTryingOutFor,
+      ]];
 
-      // // Write data to the Google Sheet
-      // await sheets.spreadsheets.values.append({
-      //   spreadsheetId,
-      //   range,
-      //   valueInputOption: 'RAW',
-      //   resource: { values },
-      // });
-
+      // Write data to the Google Sheet
+      await sheets.spreadsheets.values.append({
+        spreadsheetId,
+        range,
+        valueInputOption: 'RAW',
+        resource: { values },
+      });
+      
       res.status(200).json({ success: true, filtered: false });
     } catch (error) {
       console.error('Error handling webhook:', error);
