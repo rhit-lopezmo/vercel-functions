@@ -35,11 +35,14 @@ export default async function handler(req, res) {
       console.log(`Team Trying Out For: ${teamTryingOutFor}`);
       console.log(`Date: ${date}`);
 
+       // Decode Base64 private key
+       const privateKey = Buffer.from(process.env.GOOGLE_PRIVATE_KEY, 'base64').toString('utf-8');
+
       // Authenticate with Google Sheets API
       const auth = new google.auth.GoogleAuth({
         credentials: {
           client_email: process.env.GOOGLE_CLIENT_EMAIL,
-          private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+          private_key: privateKey
         },
         scopes: ['https://www.googleapis.com/auth/spreadsheets'],
       });
