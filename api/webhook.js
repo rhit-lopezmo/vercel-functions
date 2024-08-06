@@ -6,7 +6,7 @@ export default async function handler(req, res) {
 		try {
       const event = req.body;
       
-      const sessionId = event.object.id;
+      const sessionId = `${event.object.id}`;
 
       const stripe = new Stripe(process.env.STRIPE_API_KEY, {
         apiVersion: '2023-08-16',
