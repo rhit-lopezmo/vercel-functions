@@ -6,7 +6,7 @@ export default async function handler(req, res) {
       // Extract data from the request
       const data = req.body;
 
-      if (data.line_items.price.lookup_key !== "tryout_payment_2024") {
+      if (data.line_items[0].price.lookup_key !== "tryout_payment_2024") {
         console.log("Checkout Session did not match criteria.");
         res.status(200).json({ success: true, filtered: true });
         return;
