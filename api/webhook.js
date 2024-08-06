@@ -4,15 +4,16 @@ import Stripe from "stripe";
 export default async function handler(req, res) {
 	if (req.method === "POST") {
 		try {
-      
       const event = req.body;
       
       const sessionId = event.object.id;
 
-      const stripe = new Stripe(process.env.STRIPE_API_KEY);
+      const stripe = new Stripe(process.env.STRIPE_API_KEY, {
+        apiVersion: '2023-08-16',
+      });
 
       // Retrieve the session from Stripe
-      const data = await stripe.checkout.sessions.retrieve(sessionId, {
+      data = await stripe.checkout.sessions.retrieve(sessionId, {
         expand: ["line_items"],
       });
 
