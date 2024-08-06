@@ -6,7 +6,10 @@ export default async function handler(req, res) {
 		try {
       const event = req.body;
       
-      const sessionId = event.id;
+      // Log the received event
+      console.log('Received event:', JSON.stringify(event, null, 2));
+
+      const sessionId = event.data.object.id;
 
       const stripe = new Stripe(process.env.STRIPE_API_KEY, {
         apiVersion: '2023-08-16',
