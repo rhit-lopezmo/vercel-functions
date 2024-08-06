@@ -13,7 +13,7 @@ export default async function handler(req, res) {
       });
 
       // Retrieve the session from Stripe
-      data = await stripe.checkout.sessions.retrieve(sessionId, {
+      const data = await stripe.checkout.sessions.retrieve(sessionId, {
         expand: ["line_items"],
       });
 
