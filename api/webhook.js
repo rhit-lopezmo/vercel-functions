@@ -17,15 +17,18 @@ app.post('/webhook', async (req, res) => {
     }
 
     const playerFirstName = data.custom_fields[0].text.value.trim();
+
     const playerLastName = data.custom_fields[1].text.value.trim();
+
     const email = data.customer_details.email;
-    const teamTryingOutFor = data.custom_field[2].dropdown.value.trim().toUpperCase();
+
+    const teamTryingOutFor = data.custom_fields[2].dropdown.value.trim().toUpperCase();
     
     // date formatting
     let date = new Date();
-    const mm = date.getMonth() + 1;
-    const dd = date.getDate();
-    const yyyy = date.getFullYear();
+    let mm = date.getMonth() + 1;
+    let dd = date.getDate();
+    let yyyy = date.getFullYear();
 
     // Add leading zero if the day is less than 10
     if (dd < 10) {
