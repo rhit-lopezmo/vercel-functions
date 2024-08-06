@@ -1,9 +1,9 @@
 // api/webhook.js
-const express = require('express');
-const { google } = require('googleapis');
+import express, { json } from 'express';
+import { google } from 'googleapis';
 const app = express();
 
-app.use(express.json());
+app.use(json());
 
 app.post('/webhook', async (req, res) => {
   try {
@@ -88,4 +88,4 @@ app.post('/webhook', async (req, res) => {
   }
 });
 
-module.exports = app;
+export default app;
