@@ -1,9 +1,9 @@
 // api/webhook.js
-import express, { json } from 'express';
+import express from 'express';
 import { google } from 'googleapis';
 const app = express();
 
-app.use(json());
+app.use(express.json());
 
 app.post('/webhook', async (req, res) => {
   try {
