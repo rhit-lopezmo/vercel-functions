@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.2",
     "googleapis": "^140.0.1",
     "vercel": "^35.2.3"
   }
