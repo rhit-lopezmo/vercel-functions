@@ -1,1 +1,1 @@
-this if for setting up vercel functions for tryouts
+this is for setting up vercel functions for tryouts
